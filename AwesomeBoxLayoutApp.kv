@@ -1,0 +1,114 @@
+#:kivy 1.9.0
+#:import Factory kivy.factory.Factory
+
+WindowManager:
+    BoxLa:
+    choosefileWindows:
+
+<BoxLa>
+    name: "first"
+    canvas.before:
+        Color:
+            rgba:(240/255,240/255,240/255,240/255)
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    BoxLayout:
+        orientation: "horizontal"
+        size: root.width, root.height
+        BoxLayout:
+            orientation: "horizontal"
+        BoxLayout:
+            orientation:"vertical"
+            padding:10
+            spacing:10
+            RoundedButton:
+                text :"Définir la source"
+                on_release: Factory.MyPopup().open()
+                #on_press: root.callbackSource()
+                # pos_hint: {'center_x': 0.5}
+                # size_hint : (1, .0)
+               
+               
+            RoundedButton:
+                text: "Démarer le comptage"
+                # pos_hint: {'center_x': 0.5}
+                # size_hint : (1, .0)
+            RoundedButton:
+                text: "Arreter le comptage"
+                #on_press: root.video()
+                
+                
+            RoundedButton:
+                text:"Modifier les paramétres"
+                # pos_hint: {'center_x': 0.5}
+                # size_hint : (1, .0)
+               
+
+<RoundedButton@Button>
+    background_color:(0,0,0,0)
+    background_normal:''
+    canvas.before:
+        Color:
+            rgba:(48/255,84/255,150/255,1)
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+            radius:[20]
+<MyPopup@Popup>
+    auto_dismiss: True
+    title:"Source"
+    size_hint:0.3, 0.3
+    pos_hint:{"x":0.4,"top":0.9}
+    BoxLayout:
+        orientation:"vertical"
+        Button:
+            text:"Choisir Caméra"
+            font_size:24
+        Button:
+            text: "Choisir dans fichier"
+            font_size:24
+            on_release:
+                app.root.current ="second"
+                root.dismiss()
+                #root.manager.transition.direction = "left"
+
+<MyFilePopup@Popup>
+    auto_dismiss: True
+    title:"Choisir la video"
+    size_hint:0.3, 0.3
+    pos_hint:{"x":0.4,"top":0.9}
+
+<choosefileWindows>
+    name: "second"
+    label: label
+ 
+    # Providing the orientation
+    orientation: 'vertical'
+ 
+    # Creating the File list / icon view
+     
+    BoxLayout:
+ 
+        # Creating list view one side
+        FileChooserListView:
+            canvas.before:
+                Color:
+                    rgb: .4, .5, .5
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            on_selection: root.select(*args)
+ 
+     
+ 
+    # Adding label
+    Label:
+        id: label
+        size_hint_y: .1
+        canvas.before:
+            Color:
+                rgb: .5, .5, .4
+            Rectangle:
+                pos: self.pos
+                size: self.size
